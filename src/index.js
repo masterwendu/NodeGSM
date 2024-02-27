@@ -1,4 +1,4 @@
-const SerialPort = require('serialport')
+const { SerialPort } = require('serialport')
 const GSMErrors = require('./errors')
 const Parser = require('./parsing')
 const Constants = require('./constants')
@@ -17,7 +17,7 @@ class GSM {
     constructor(path) {
         this.path = path
         this.connected = false
-        this.serialPort = new SerialPort(path, { baudRate: 460800, autoOpen: false })
+        this.serialPort = new SerialPort({ path, baudRate: 460800, autoOpen: false })
         this.parser = new Parser()
     }
 
@@ -352,6 +352,7 @@ class GSM {
         await this.setCharacterSet(GSM.CharacterSet.UCS2)
         await this.setMessageFormat(GSM.MessageFormat.PDU)
         await this.runCommand(`AT+CMGS="${msisdn.UCS2HexString()}"`, timeout) // returns a prompt > for a message
+        console.log('first command done')
         const result = await this.runCommand(`${message.UCS2HexString()}${CTRL_Z}`, timeout)
         return result.replace("+CMGS: ","")
     }

@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/stasel/NodeGSM",
   "dependencies": {
-    "serialport": "^9.0.4"
+    "serialport": "12.0.0"
   }
 }
