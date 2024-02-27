@@ -198,7 +198,7 @@ class GSM {
      */
     async getCharacterSet() {
         let result = await this.runCommand("AT+CSCS?")
-        return result.replace("CSCS: ","").trimQuotes()
+        return result.replace("CSCS: ","")
     }
 
     /**
@@ -224,7 +224,7 @@ class GSM {
         const result = await this.runCommand("AT+COPS?")
         const parts = result.replace("+COPS: ","").split(",")
         if (parts[2]) {
-            return parts[2].trimQuotes()
+            return parts[2]
         }
         return "Unknown"
     }
@@ -349,8 +349,8 @@ class GSM {
      * @returns {String} - Reference ID if the delivery was successful
      */
     async sendSMS(msisdn, message) {
-        await this.setCharacterSet(GSM.CharacterSet.GSM)
-        await this.setMessageFormat(GSM.MessageFormat.text)
+        await this.setCharacterSet(GSM.CharacterSet.UCS2)
+        await this.setMessageFormat(GSM.MessageFormat.PDU)
         await this.runCommand(`AT+CMGS="${msisdn.UCS2HexString()}"`) // returns a prompt > for a message
         const result = await this.runCommand(`${message.UCS2HexString()}${CTRL_Z}`)
         return result.replace("+CMGS: ","")

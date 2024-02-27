@@ -1,4 +1,4 @@
-const GSM = require('./gsm')
+const GSM = require('./src/index')
 const gsm = new GSM('/dev/ttyUSB0')
 
 async function main() {
@@ -25,6 +25,8 @@ async function main() {
     console.log(`    Signal: ${(await gsm.getSignalQuality()).description }`)
     console.log(`    Subscriber ID: ${await gsm.getSubscriberId()}`)
     console.log(`    Phone Number: ${await getPhoneNumber(gsm) || "Unknown"}`)
+
+    await gsm.sendSMS('+4367761943548', 'Hello from node-gsm-modem')
 
     // Polling on the list of unread messages and write all messages to stdout
     while(true) {
