@@ -348,11 +348,11 @@ class GSM {
      * @param {String} message - Text message to 
      * @returns {String} - Reference ID if the delivery was successful
      */
-    async sendSMS(msisdn, message) {
+    async sendSMS(msisdn, message, timeout) {
         await this.setCharacterSet(GSM.CharacterSet.UCS2)
         await this.setMessageFormat(GSM.MessageFormat.PDU)
-        await this.runCommand(`AT+CMGS="${msisdn.UCS2HexString()}"`) // returns a prompt > for a message
-        const result = await this.runCommand(`${message.UCS2HexString()}${CTRL_Z}`)
+        await this.runCommand(`AT+CMGS="${msisdn.UCS2HexString()}"`, timeout) // returns a prompt > for a message
+        const result = await this.runCommand(`${message.UCS2HexString()}${CTRL_Z}`, timeout)
         return result.replace("+CMGS: ","")
     }
 

@@ -26,7 +26,7 @@ async function main() {
     console.log(`    Subscriber ID: ${await gsm.getSubscriberId()}`)
     console.log(`    Phone Number: ${await getPhoneNumber(gsm) || "Unknown"}`)
 
-    await gsm.sendSMS('+4367761943548', 'Hello from node-gsm-modem')
+    await gsm.sendSMS('+4367761943548', 'Hello from node-gsm-modem', 10000)
 
     // Polling on the list of unread messages and write all messages to stdout
     while(true) {
